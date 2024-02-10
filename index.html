@@ -1,0 +1,2305 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewpoint" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <br>
+        <p style="font-size: 15px;">page:551-600</p>
+		<p style="font-size: 20px;font-style: italic;">Table 225. SYSIN DD Parameter Descriptions (continued)</p>
+		<table style="width: 100%">
+   
+       <table>
+        <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+            </tr>
+            <tr>
+            <td>WHITESPACE</td>
+                <td>.This specifies the level of whitespace (blank kines)to be mixed in with the RODM load function compatiable output. </td>
+            </tr>
+            <tr>
+            <td></td>
+                <td>.Can be specified as either LOW or HIGH.Specifying WHITESPACE=HIGH gives the most readable output ,butWHITESPACE =LOW reduces the lines of total output by approximately half.</td>
+		   </tr>
+		   <td></td>
+                <td>. The actual data content of the output is identical with either LOW or HIGH</td>
+			</table>
+            
+        <p>The 5 output data sets are specified in the JCL. The output data sets and content
+follow:</p>
+        
+
+		<h1 style="font-size: 25px;">CLASSES</h1>
+			<p>Contains the class structure creation high-level syntax</p>
+			<h1 style="font-size: 25px;">CLASSVAL</h1>
+			<p>Contains the class subfield creation and value-setting primitives</p>
+			<h1 style="font-size: 25px;">OBJECTS</h1>
+			<p>Contains the object-creation primitives</p>
+			<h1 style="font-size: 25px;">OBJVAL</h1>
+			<p>Contains the object subfield value-setting primitives</p>
+			<h1 style="font-size: 25px;">LINKS</h1>
+		    <p>Contains the link primitives</p>
+			<br>
+			
+			<p>The RODM unload function reads the DCB specifications of the data sets from the
+JCL and modifies itself. Use the DCB specifications in the sample as supplied. The
+RODM unload function always produces output that is a maximum of 80
+characters wide, even if a wider DCB is specified.</p>
+			<p>Start the RODM unload function by running the EKGKUJCL job.</p>
+			<h1 style="font-size: 25px;">Running the RODM Unload Function</h1>
+			<p>The RODM unload function can be used to migrate from one version of RODM to
+another. This is accomplished by unloading an existing RODM and loading the
+newer version of RODM with the output from the RODM unload function. To
+perform a complete unload of RODM, change the SYSIN parameters in the
+EKGKUJCL job as shown in Figure 140 and run the job. Note that the OBJECT=
+parameter has been deleted from the sample JCL.</p>
+			<p style="font-style: bold;">RODM=(rodmname)</p>
+			<p style="font-style: bold;">CLASS=UniversalClass</p>
+			<p style="font-style: bold;">DEPTH=All</p>
+			<p style="font-style: bold;">REPORTONLY=No</p>
+			<p style="font-style: bold;">WRITEMODE=Overwrite</p>
+                 <p style="font-style: bold;">WHITESPACE=Low</p>
+			
+			<p style="font-size: 20px;font-style: italic;">Figure 140. EKGKUJCL SYSIN Parameters to Unload RODM Completely</p>
+			<br>
+			<p>To unload all the objects that represent network monitorable (real and aggregate)
+resources in the GMFHS data model, the SYSIN parameters to EKGUJCL are
+changed as shown in Figure 141 on page 552.</p>
+		<br>
+			<br>
+			<p style="font-style: bold;">RODM=(rodmname)</p>
+			<p style="font-style: bold;">CLASS=GMFHS_Monitorable_Objects_Class</p>
+			<p style="font-style: bold;">DEPTH=All</p>
+			<p style="font-style: bold;">REPORTONLY=No</p>
+			<p style="font-style: bold;">WRITEMODE=Overwrite</p>
+			<p style="font-style: bold;">WHITESPACE=Low</p>
+			
+	<p style="font-size: 20px;font-style: italic;">Figure 141. EKGKUJCL SYSIN Parameters to Unload Network Monitorable Objects</p>
+		<p>To get the RODM definitions for a particular object, when the class of the object is
+not known, change the SYSIN parameters EKGKUJCL job as shown in Figure 142.</p>
+			<p style="font-style: bold;">RODM=(rodmname)</p>
+			<p style="font-style: bold;">CLASS=UniversalClass</p>
+			<p style="font-style: bold;">OBJECT=DesiredObject</p>
+			<p style="font-style: bold;">DEPTH=All</p>
+			<p style="font-style: bold;">REPORTONLY=No</p>
+			<p style="font-style: bold;">WRITEMODE=Overwrite</p>
+			<p style="font-style: bold;">WHITESPACE=High</p>
+			<p style="font-size: 20px;font-style: italic;">Figure 142. EKGKUJCL SYSIN Parameters to Unload an Object When Class is Unknown</p>
+			<p>If the class that the object is defined under is known, it saves processing time to
+specify that class directly. Set the CLASS=, OBJECT= and the DEPTH= parameters as
+shown in Figure 143.</p>
+			<p style="font-style: bold;">RODM=(rodmname)</p>
+			<p style="font-style: bold;">CLASS=SpecificClass</p>
+			<p style="font-style: bold;">OBJECT=DesiredObject</p>
+			<p style="font-style: bold;">DEPTH=One</p>
+			<p style="font-style: bold;">REPORTONLY=No</p>
+			<p style="font-style: bold;">WRITEMODE=Overwrite</p>
+			<p style="font-style: bold;">WHITESPACE=High</p>
+			<p style="font-size: 20px;font-style: italic;">Figure 143. EKGKUJCL SYSIN Parameters to Unload an Object When Class is Known</p>
+			<p>To get the RODM definitions for all objects in two particular classes only, change
+the parameters in the EKGKUJCL job as shown in Figure 144.</p>
+			<p style="font-style: bold;">RODM=(rodmname)</p>
+			<p style="font-style: bold;">CLASS=SpecificClass1</p>
+		     <p style="font-style: bold;">CLASS=SpecificClass2</p>   
+             <p style="font-style: bold;">DEPTH=One</p>
+			<p style="font-style: bold;">REPORTONLY=No</p>
+			<p style="font-style: bold;">WRITEMODE=Overwrite</p>
+			<p style="font-style: bold;">WHITESPACE=Low</p>
+			<p style="font-size: 20px;font-style: italic;">Figure 144. EKGKUJCL SYSIN Parameters to Determine Object Definitions for Two Classes</p>
+			
+			
+			 <h2 style="<b>;font-size: 25px;font-family:sans-serif; margin-left: 20px;">FLCARODM</h2>
+			  <center>
+			    <p>FLCARODM (RODM Access Facility) provides a fast and efficient REXX interface
+to RODM. (FLCARODM was formerly known as the RODM Access Facility or
+MultiSystem Manager Access.) With FLCARODM, you can create, update, and
+delete objects using a NetView CLIST written in REXX. FLCARODM provides a
+simple interface to RODM and you can use it to exploit the processing advantages
+of issuing batched requests to RODM. This section describes how to use
+FLCARODM and includes the following topics:</p>
+				  <p>.Using stem building routines</p>
+				  <p>.The FLCARODM command</p>
+				  <p>.FLCARODM functions</p>
+				  <p>.v The result stem</p>
+				  <br>
+				  
+				   <p>.The object data stream</p>
+				  </center>
+			<h1 style="font-size: 25px;">Overview</h1>
+			<p>FLCARODM provides a REXX interface to the RODM user application
+programming interface (UAPI). FLCARODM performs multiple operations on one
+or more objects in a single invocation and removes many of the complexities of
+using the RODM UAPI. Use this high speed interface to create, update, query, locate, and delete objects in RODM.</p>
+			
+			<p>The two ways to use FLCARODM are as follows:</p>
+			<p>.Specify the data and operations using a low-level data stream. See “Object Data
+Stream Detail” on page 594 for more information.</p>
+			<p>.Use the stem building subroutines that are provided by NetView to create a
+REXX stem variable.</p>
+			<h1 style="font-size: 25px;">Stem Building Subroutines</h1>
+			<p>This section describes the subroutines that are provided to create the REXX object
+data stream in a REXX stem variable. These subroutines are called stem building
+subroutines, and they create the contents of a REXX stem variable that gets passed
+to FLCARODM using the FLCARODM command.</p>
+			<p>The stem building subroutines are provided in the FLCSSTEM sample. You can use
+FLCSSTEM by appending it to your procedure using an INCLUDE statement such
+as the following statement:</p>
+			<p>%INCLUDE FLCSSTEM</p>
+			<p>To use an INCLUDE statement, you must also enable the NetView program
+support of %INCLUDE by coding /*%NETVINCL at the beginning of the first line of
+your procedure.</p>
+			<p>Note: Instead of using an INCLUDE statement, you can copy the code from the
+FLCSSTEM sample into your procedure.</p>
+			<p>The subroutines that are provided manipulate REXX stem variables that are used
+with FLCARODM. These subroutines manipulate the following stem variables:</p>
+			<p>.RodmStem which is used as input to FLCARODM</p>
+			<p>.RodmResult which is used to hold the output from FLCARODM</p>
+			<p>.QueryStem which is used to hold queried information extracted from
+RodmResult</p>
+			<p>A variable called Retcode is used by all of the subroutines to indicate if any errors
+have occurred. A non-zero value in the Retcode variable indicates that processing
+stops.</p>
+			<p>FLCARODM supports class, object, and field IDs in the input stem variable. To
+specify a numeric ID instead of a name, prefix the ID with a #. For example, if you
+knew an object's class ID was 12, you can specify an element of the input stem
+variable as input.x = ’#12’.</p>
+			<h1 style="font-size: 25px;">AddAttr Subroutine</h1>
+			<p>Use the AddAttr subroutine to specify a new or existing field on the current object.</p>
+			<br>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style: italic">call AddAttr fieldname fieldtype fieldvalue</p>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">fieldname</p>
+			<p>The name of the field</p>
+			<p style="font-style: italic">fieldtype</p>
+			<p>The data type of the field</p>
+			<p style="font-style: italic">fieldvalue</p>
+			<p>The new or changed value of the field</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Use AddAttr with the BUILD and UPDATE functions.</p>
+			<p>.AddAttr must be specified before Addlink</p>
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSX7 calls the AddAttr subroutine that creates
+a field named DispStat that is of type Integer and that has a value of InActive:</p>
+			<p style="font-style:oblique;">call AddAttr DispStat Integer InActive</p>
+			<p>Note: DispStat is a shortened version of DisplayStatus that is defined in the
+FLCSSTEM sample by using the following assignment statement:</p>
+			<p style="font-style:oblique;">DispStat = ’DisplayStatus’</p>
+			<h1 style="font-size: 25px;">AddAttrForQuery Subroutine</h1>
+			<p>Use the AddAttrForQuery subroutine to specify either the field to be queried using
+the QUERY function, or the name of the first field when a function is specified
+with the XREF=1STFIELD parameter.</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call AddAttrForQuery ’fieldname’</p>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">fieldname</p>
+			<p>The name of the field to query or the name of the field referred to by the
+XREF=1STFIELD parameter</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Use the AddAttrForQuery subroutine with the QUERY function, or with the
+following functions when they are specified with the XREF=1STFIELD
+parameter.</p>
+			<p>-DELINKA</p>
+			<p>– DELOBJ</p>
+			<p>– QUERY</p>
+             <p>– UPDATE</p>
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSXS02 calls the AddAttrForQuery subroutine
+to specify four fields on the RealAgent object of the RAgeClass that are queried:</p>
+			<p style="font-style:oblique;">call StartObject RAgeClass RealAgent</p>
+			<p style="font-style:oblique;">call AddAttrForQuery MyName</p>
+			<p style="font-style:oblique;">call AddAttrForQuery DispName</p>
+			<p style="font-style:oblique;">call AddAttrForQuery RealAgeNam</p>
+			<p style="font-style:oblique;">call AddAttrForQuery RealSerNam</p>
+			<p style="font-style:oblique;">call MakeRODMCall ’QUERY'</p>
+			<p>The following code from sample FLCSX19 calls the AddAttrForQuery subroutine
+to specify two fields on the Demo_Lan object of the AGrphClass class that are used
+to identify object links that are to be removed:</p>
+			<p style="font-style:oblique;">call StartObject AGrphClass ’Demo_Lan’</p>
+			<p style="font-style:oblique;">call AddAttrForQuery Member</p>
+			<p style="font-style:oblique;">call call AddAttrForQuery PhyConn</p>
+			<p style="font-style:oblique;">call call MakeRODMCall ’DELINKA’ ’XREF=1STFIELD’</p>
+			<p>AddAttrForQuery Member specifies that all objects specified by the Member field are
+identified and AddAttrForQueryPhyConn specifies that all links specified by the
+PhyicalConPP field are removed.</p>
+			<h1 style="font-size: 25px;">AddLink Subroutine</h1>
+			<p>Use the AddLink subroutine to specify a field to link to. The field must be one of
+the following data types:</p>
+			<p>.ObjectLink</p>
+			<p>.ObjectLinkList</p>
+			<p>.ObjectIdList</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call AddLink ’linkfldname’ ’classofobj’ ’nameofobj’ ’fldofobj’</p>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">linkfldname</p>
+			<p>The name of the field to be linked to</p>
+			<p style="font-style: italic">classofobj</p>
+			<p>The class of the object to be linked to</p>
+			<p style="font-style: italic">nameofobj</p>
+			<p>The name of the object to be linked to</p>
+			<p style="font-style: italic">fldofobj</p>
+			<p>The field on the object to be linked to</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Calls to the AddAttr subroutine must be specified before call to AddLink are
+specified</p>
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSX11 uses the AddLink subroutine to specify
+the PhysicalConnPP field of the Bridge_1 object and the PhysicalConnPP fields of
+the Segment_1 and Segment_2 objects. The DELINKAB function removes the links
+defined by the PhysicalConnPP fields.</p>
+			<p style="font-style:oblique;">call StartObject ABrgClass ’Bridge_1’</p>
+			<p style="font-style:oblique;">call AddLink PhyConn ASegClass ’Segment_1’ PhyConn</p>
+			<p style="font-style:oblique;">call AddLink PhyConn ASegClass ’Segment_2’ PhyConn</p>
+			<p style="font-style:oblique;">call MakeRODMCall ’DELINKAB’</p>
+			<h1 style="font-size: 25px;">AddLinkForDelete Subroutine</h1>
+			<p>Use the AddLinkForDelete subroutine to specify a link on the specified object.</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call AddLinkForDelete fldname</p>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">fldname</p>
+			<p>The name of the field on the specified object that defines the link that is to be
+deleted.</p>
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSX10 calls the AddLinkForDelete subroutine
+that specifies the PhysicalConnPP on the object of the ABrgClass class named
+Bridge_1. The DELINKA function removes the links defined by the
+PhysicalConnPP field.</p>
+			<p style="font-style:oblique;">call StartObject ABrgClass ’Bridge_1’</p>
+			<p style="font-style:oblique;">call AddLinkForDelete PhyConn</p>
+			<p style="font-style:oblique;">call AddLinkForDelete PhyConn</p>
+			
+			<h1 style="font-size: 25px;">CheckChildrenUpdate Subroutine</h1>
+			<p>Use the CheckChildrenUpdate subroutine to remove acceptable return codes from
+the RodmResult stem variable when either the UPDATE or DELINKA function is
+specified with the CHILDREN=ONLY parameter.</p>
+			<p>Acceptable return codes indicate one of the following:</p>
+			<p>.An aggregate object does not exist.</p>
+			<p>.Child objects do not exist.</p>
+			<p>.Specified fields do not exist on the child object.</p>
+			<br>
+			<p>For unacceptable return codes:</p>
+			<p>.Message FLC070E is issued.</p>
+			<p>.The return codes are written to the log.</p>
+			<p>.The Retcode stem variable is set to 16.</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call CheckChildrenUpdate</p>
+			<br>
+			<p>.Use this subroutine only when you specify the UPDATE and DELINKA
+functions with the CHILDREN=ONLY parameter. Combinations of other
+functions and parameters are not supported.</p>
+			<h1 style="font-size: 25px;">CheckDelinkResponse Subroutine</h1>
+			<p>Use the CheckDeLinkResponse subroutine to remove acceptable return codes from
+the RodmResult stem variable when either the DELOBJ or DELINKA function is
+specified.</p>
+			<p>Acceptable return codes indicate one of the following:</p>
+			<p>.An aggregate object does not exist.</p>
+			<p>.Child objects do not exist.</p>
+			<p>.Specified fields do not exist on the child object.</p>
+			<p>For unacceptable return codes:</p>
+			<p>.Message FLC070E is issued.</p>
+			<p>.The return codes are written to the log.</p>
+			<p>.The Retcode stem variable is set to 16.</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call CheckDelinkResponse</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Use this subroutine only when you specify the DELOBJ and DELINKA
+functions. Other functions are not supported.</p>
+			<h1 style="font-size: 25px;">InitRODMConstants Subroutine</h1>
+			<p>Use the InitRODMConstants subroutine to initialize the constants specified in the
+FLCSSTEM sample.</p>
+			
+				<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call InitRODMConstants</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.You must read the code to see what variables are available for your use.</p>
+			<h1 style="font-size: 25px;">InitRODMStem Subroutine</h1>
+			<p>Use the InitRODMStem subroutine to initialize the RODMStem variable.</p>
+			
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call InitRODMStem</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Specify InitRODMStem the first time you use FLCSSTEM. Subsequent calls to
+InitRODMStem are not required, because the MakeRODMCall subroutine calls
+InitRODMStem.</p>
+			<h1 style="font-size: 25px;">MakeRODMCall Subroutine</h1>
+			<p>Use the MakeRODMCall subroutine to issue the FLCARODM command with the
+RODMStem variable as input.</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call MakeRODMCall function functparm1 functparm2</p>
+			<br>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">function</p>
+			<p>Specifies the function to be performed. See “FLCARODM Functions” on page
+564 for more information.</p>
+			<p style="font-style: italic">functparm1</p>
+			<p>Specifies the first function parameter.</p>
+			<p style="font-style: italic">functparm2</p>
+			<p>Specifies the second function parameter.</p>
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSXF1 calls the QUERY subroutine with the
+XREF and FILTER parameters.</p>
+			<p style="font-style:oblique;">call MakeRODMCall ’QUERY’ ’XREF=2.9.3.2.7.42’ ’FILTER=1STFIELD’</p>
+			<h1 style="font-size: 25px;">SetIndexList Subroutine</h1>
+			<p>Use the SetIndexList subroutine to update the value of fields that are of type
+IndexList.</p>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call SetIndexList fieldvalue fieldname</p>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">fieldvalue</p>
+			<p>Specifies the value of the field</p>
+						<p style="font-style: italic">fieldname</p>
+			<p>Specifies the name of the field.</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Use SetIndexList to update the value of fields that are only of type IndexList.</p>
+			<p>.Use caution when using the SetIndexList function, because the value of the field
+is overwritten and the previous value cannot be recovered.</p>
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSX22 calls the SetIndexList subroutine to
+modify the ExceptionViewList field on the Demo_Lan object:</p>
+			<p style="font-style:oblique;">call StartObject AGrphClass ’Demo_Lan’</p>
+			<p style="font-style:oblique;">my_String = ’testing’</p>
+			<p style="font-style:oblique;">call SetIndexList my_String ExceptionViewList</p>
+			<p style="font-style:oblique;">call MakeRODMCall ’UPDATE’</p>
+			<h1 style="font-size: 25px;">StartObject Subroutine</h1>
+			<p>Use the StartObject subroutine to specify a new or existing object. Subsequent
+subroutine specifications (for example, AddAttr) apply to the current object until
+either another object is specified by StartObject, or the MakeRODMCall subroutine
+is specified.</p>
+			<br>
+			<h1 style="font-size: 25px;">Specification</h1>
+			<p style="font-style:oblique;">call StartObject classname objectname</p>
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<p>Where:</p>
+			<p style="font-style: italic">classname</p>
+			<p>The name of the class for the object that is specified.</p>
+			<p style="font-style: italic">objectname</p>
+			<p>The name of the object that is specified.</p>
+			<h1 style="font-size: 25px;">Usage Notes</h1>
+			<p>.Classes cannot be created using StartObject.</p>
+			<p>.Use the StartObject subroutine with all of the FLCARODM functions.</p>
+			<p>.Object names must be specified between single quotation marks (' ').</p>
+			
+			<h1 style="font-size: 25px;">Example</h1>
+			<p>The following code from sample FLCSX09 calls the StartObject subroutine which
+creates an object of the AGrphClass named Demo_Lan:</p>
+			<p style="font-style:oblique;">call StartObject AGrphClass ’Demo_Lan’</p>
+			<p>Note that if no object named Demo_Lan exists when sample FLCSX09 is run, a
+new object is created. If an object named Demo_Lan already exists, the existing
+object is used.</p>
+			<h1 style="font-size: 30px;">About the Examples</h1>
+			<p>The examples used in this appendix are provided by the NetView Product as
+sample code. Although the examples use the MultiSystem Manager and GMFHS
+data models, FLCARODM supports any data model that is loaded in RODM.</p>
+			<p>The examples create stem variables that are used as input to the FLCARODM
+command. The statement call MakeRODMCall function calls the FLCARODM
+command using the function specified. For example, the following statement issues
+the FLCARODM command with the BUILD function.</p>
+			<p style="font-style:oblique;">call MakeRODMCall ’BUILD’</p>
+			<h1 style="font-size: 25px;">Using the Samples</h1>
+			<p>To use the sample code provided by the NetView product, perform the following
+tasks:</p>
+			<p>.In your REXX procedure, set a variable FLC_RODMNAME to the name of the
+RODM you are using.</p>
+			<p>.In your REXX procedure, set a variable FLC_RODMAPPL to your RODM
+application ID.</p>
+			<p>.Include the subroutines in FLCSSTEM by using an %INCLUDE statement in
+your REXX procedure immediately after your own subroutines. To use an INCLUDE statement, you must also enable the NetView program support of %INCLUDE by coding /*%NETVINCL at the beginning of the first line of your procedure. FLCSSTEM provides the subroutines and constant definitions that are used by the samples.</p>
+			<p>Note: Instead of using an INCLUDE statement, you can copy the code from the
+FLCSSTEM sample into your procedure.</p>
+			<br>
+			<h1 style="font-size: 30px;">FLCARODM Command</h1>
+			<p>Use the FLCARODM command to input data into and read data from RODM.</p>
+			<p>The FLCARODM command must be issued using the NETVIEW stage of the
+NetView PIPE command. Therefore, it receives information about the functions to
+be performed from two sources: the PIPE data stream and the parameters the
+command is issued with. Figure 145 shows an example of issuing the FLCARODM
+command:</p>
+			<img src="14.5%20fig.jpg">
+			
+			<p style="font-size: 20px;font-style: italic;">Figure 145. Issuing the FLCARODM Command</p>
+			<p>Where:</p>
+			<h1 style="font-size: 25px;">object_data</h1>
+			<p>The REXX stem variable that is used as input.</p>
+			<h1 style="font-size: 25px;">parameters</h1>
+			<p>The parameters of the FLCARODM command</p>
+			<h1 style="font-size: 25px;">result</h1>
+			<p>The REXX stem variable that receives the return codes or data from
+				FLCARODM.</p>
+			<p>Use the format shown in Figure 145 when you are specifying data using the object
+data stream described in “Object Data Stream Detail” on page 594.</p>
+			<p>The NetView product also provides another way to use the FLCARODM
+command. Instead of specifying the command directly, use the MakeRODMCall
+subroutine. See “Stem Building Subroutines” on page 553 for a description of the
+MakeRODMCall subroutine and the other subroutines you can use to create a
+REXX object data stream.</p>
+			<p>The following section describes the format of the FLCARODM command. The
+description includes the format and description of the operands and usage notes.</p>
+			<h1 style="font-size: 25px;">FLCARODM
+Syntax</h1>
+			<img src="syntax%20img.jpg">
+			<h1 style="font-size: 25px;">FLCARodmFunctions:</h1>
+			<img src="img%201.jpg">
+			<h1 style="font-size: 25px;">Xref:</h1>
+			<img src="img%202.jpg">
+			<h1 style="font-size: 25px;">PurgeOptions:</h1>
+			<img src="img%203.jpg">
+			<h1 style="font-size: 25px;">Operand Descriptions</h1>
+			<h1 style="font-size: 15px;">CHILDREN</h1>
+			<p>Specifies whether the operation applies to the specified children of the object.
+The CHILDREN parameter cannot be specified if the XREF parameter is
+specified.</p>
+			<p>Use the CHILDREN parameter with the following functions:</p>
+			<p>.UPDATE</p>
+			<p>.DELINKA</p>
+			<p>.DELOBJ</p>
+			
+			<h1 style="font-size: 15px;">NO</h1>
+			<p>Indicates that the function is performed on the specified object, but not on
+its children.</p>
+			<br>
+			
+			<h1 style="font-size: 15px;">ONLY</h1>
+			<p>Indicates that the function is performed on the specified children of the
+object, but not on the object itself.</p>
+			<h1 style="font-size: 15px;">YES</h1>
+			<p>Indicates that the function is performed on the object specified and its
+children.</p>
+			<h1 style="font-size: 15px;">Notes:</h1>
+			<p>1. YES is not valid with the UPDATE function.</p>
+			<p>2. For the UPDATE function, only the first level of children is updated.</p>
+			<h1 style="font-size: 15px;">EXCLUDE</h1>
+			<p>Used with the PURGE function and can be specified only when TRACE=YES is
+specified. The EXCLUDE option indicates which purge messages (FLC040I,
+FLC041I, and FLC042I) must not be issued during purge processing. If you
+attempt to purge an aggregate object that has many objects beneath it, you
+might want to receive the FLC040I and FLC042I successful purge messages and
+suppress the FLC041I unsuccessful purge messages (for example,
+EXCLUDE=FLC041I). Otherwise, you might receive many unwanted FLC041I
+messages. One to three of these purge messages can be specified. No other
+messages are permitted.</p>
+			<h1 style="font-size: 15px;">FIELDID</h1>
+			<p>Indicates whether the QUERY function returns field identifiers with the field
+names.</p>
+			<h1 style="font-size: 15px;">NO</h1>
+			<p>Indicates that the field identifiers are not returned.</p>
+			<h1 style="font-size: 15px;">YES</h1>
+			<p>Indicates that the field identifiers are returned.</p>
+			<h1 style="font-size: 15px;">FILTER</h1>
+			<p>Used with the XREF parameter to filter the list of objects that are operated on.</p>
+			<p>Use the FILTER parameter with the following functions:</p>
+			<p>.DELOBJ</p>
+			<p>.DELINKA</p>
+			<p>.PURGE</p>
+			<p>.QUERY</p>
+			<p>.QUERYSF</p>
+			<p>.UPDATE</p>
+			<p>The XREF parameter must be specified before the FILTER parameter is
+specified except for the PURGE function. For the PURGE function, FILTER can
+be specified without the XREF parameter.</p>
+			<p>The first field on each object specification must be the field name, type, and
+value of the filter criteria. The FILTER value is applied only after all other
+functions and parameters have been processed. FILTER returns values that are
+either exact matches or partial matches. For example, if the field value Segment
+is specified and an object exists that has the value Seg, the filter matches and
+the object is returned.</p>
+						<p>FILTER=1STFIELD must be specified unless XREF=1STFILELD is specified. If
+XREF=1STFILELD is specified, FILTER=2NDFIELD must be specified. The field
+description must specify the following information in the order shown:</p>
+			<p>1. Field name</p>
+			<p>2. Field data type</p>
+			<p>3. Field value</p>
+			<br>
+			
+<h1 style="font-size: 15px;">FUNCTION</h1>
+			<p>Specifies the function that is performed. For a description of each function, see
+“FLCARODM Functions” on page 564.</p>
+			<h1 style="font-size: 15px;">LOCATE</h1>
+			<p>Specifies that the first field definition is used as the criteria to create a list of
+objects.</p>
+			<p>LOCATE=1STFIELD must be specified, and the first field description must specify
+the following information in the order listed:</p>
+			<p>1. Field name</p>
+			<p>2. Field data type</p>
+			<p>2. Field data type</p>
+			
+			<p>Use the LOCATE parameter with the following functions:</p>
+			<p>.DELINKA</p>
+			<p>.DELOBJ</p>
+			<p>.QUERY</p>
+			<p>.QUERYSF</p>
+			<p>.UPDATE</p>
+			<h1 style="font-size: 15px;">RODMINT</h1>
+			<p>The amount of time in seconds that FLCARODM waits between retrying
+requests when RODM is checkpointing. The default value is five seconds.</p>
+			<h1 style="font-size: 15px;">RODMRTRY</h1>
+			<p>The number of times FLCARODM retries a request when RODM is
+checkpointing. The default value is three. If RODM is still checkpointing after
+FLCARODM has retried the request for the number of times specified, an error
+is returned to the application.</p>
+			<h1 style="font-size: 15px;">RODMNAME</h1>
+			<p>The name of the RODM to be used.</p>
+			<h1 style="font-size: 15px;">RODMUSER</h1>
+			<p>The application name that is used to connect to RODM. The same RODMUSER
+value can be used by multiple NetView operators executing REXX programs
+that call FLCARODM. However, Access cannot use the same RODMUSER
+value as other applications (for example, RODMVIEW) that connect to RODM.</p>
+			<p>Create a RODMUSER value by concatenating the NetView domain name with
+a three-character identifier. For example, MultiSystem Manager concatenates
+the NetView domain name CNMO1 with MultiSystem Manager to create the
+RODMUSER value. For example, if the NetView domain name is CNM01,
+MultiSystem Manager creates a RODMUSER value of CNM01MSM.</p>
+			<h1 style="font-size: 15px;">SF</h1>
+			<p>Indicates the subfield to be queried. Specify one of the following values:</p>
+			
+		     	<p>.CHANGE</p>
+				<p>.NOTIFY</p>
+				<p>.PREV_VAL</p>
+				<p>.QUERY</p>
+				<p>.TIMESTAMP</p>
+			<h1 style="font-size: 15px;">STATUS</h1>
+			<p>The DisplayStatus field value used to determine whether objects are purged by
+the PURGE function.</p>
+			<h1 style="font-size: 15px;">ALL</h1>
+			<p>Indicates that an object are purged regardless of its DisplayStatus value.
+The TIMESTMP parameter cannot be specified when STATUS has a value
+of ALL.</p>
+			<br>
+			<p>The DisplayStatus field value of the objects that are to be deleted. The
+default value is 132 (unknown).</p>
+			<h1 style="font-size: 15px;">TIMESTAMP</h1>
+			<p>The age criteria, specified in seconds, of objects to be purged. The default is
+84400, which is the number of seconds in 24 hours.</p>
+			<h1 style="font-size: 15px;">TRACE</h1>
+			<p>Specifies whether the PURGE function is run in trace mode. In trace mode, a
+message is issued for every object that is purged.</p>
+			<h1 style="font-size: 15px;">NO</h1>
+			<p>Indicates that the PURGE function is not run in trace mode.</p>
+			<h1 style="font-size: 15px;">YES</h1>
+			<p>Indicates that the PURGE function is run in trace mode.</p>
+			<h1 style="font-size: 15px;">XREF</h1>
+			<p>Specifies that a function is performed on a list of dynamically acquired objects.
+The list of objects is defined by the field that is specified. The field must be
+one of the following data types:</p>
+			<p>.ObjectIdList</p>
+						<p>.ObjectIdList</p>
+						<p>.ObjectLink</p>
+						<p>.ObjectLinkList</p>
+			<p>Use the XREF parameter with the following functions:</p>
+						<p>.DELINKA</p>
+						<p>.DELOBJ</p>
+						<p>.QUERY</p>
+			             <p>.UPDATE</p>
+			<p>The XREF parameter cannot be specified if the CHILDREN parameter is used.</p>
+			<p>Because the XREF parameter can contain mixed-case characters, ADDRESS
+NETVASIS must be specified.</p>
+			<h1 style="font-size: 15px;">1STFIELD</h1>
+			<p>Specifies that the first field that is defined on an object is used.</p>
+			<p style="font-style: italic;">objectname</p>
+			<p>Indicates the name of the field that is used. For objects that have dotted
+decimal notation names, you must use the dotted decimal name. For example, to specify the member field you must specify 2.9.3.2.7.42.</p>
+			
+			<h1 style="font-size: 25px;">FLCARodmFunctions:</h1>
+			<p>This section describes the functions provided by the FUNCTION parameter of the
+FLCARODM command.</p>
+			<p>The following information is provided for each function:</p>
+			<p>.A description of each function and when to use it.</p>
+			<p>.An example based on a set of samples that are provide by MultiSystem
+Manager.</p>
+			<p>.The results of the function are described, if applicable.</p>
+			<p>For information about using the samples described in this section, see “About the
+Examples” on page 559.</p>
+			<h1 style="font-size: 25px;">BUILD Function</h1>
+			<p>Use the BUILD function to perform the following functions:</p>
+			<p>.Create new objects</p>
+			<p>.Modify existing objects</p>
+			<br>
+			<p>.Create fields and assign field values</p>
+			<p>.Define relationships between objects</p>
+			
+			<p>The following data types are supported by the BUILD and UPDATE functions:</p>
+			<h1 style="font-size: 15px;">Date Type</h1>
+			<p>Data Type Identifier</p>
+			<h1 style="font-size: 15px;">CHARVAR</h1>
+			<p>4</p>
+			<h1 style="font-size: 15px;">INTEGER</h1>
+			<p>10</p>
+			<h1 style="font-size: 15px;">SELFDEFINING</h1>
+			<p>19</p>
+			<h1 style="font-size: 15px;">SMALLINT</h1>
+			<p>21</p>
+			<h1 style="font-size: 15px;">FIELDID</h1>
+			<p>26</p>
+			<h1 style="font-size: 15px;">ANONYMOUSVAR</h1>
+			<p>30</p>
+			<p>The following code from sample FLCSX1 demonstrates how to use the BUILD
+function to create objects in RODM:</p>
+			            <p>.</p>
+						<p>.</p>
+						<p>.</p>
+			<img src="img%20565.jpg">
+			<br>
+			<img src="img%20565%201.jpg">
+			<h1 style="font-size: 15px;">Results of Executing the BUILD Function:</h1>
+			<p>The following objects were created in
+RODM by the BUILD function:</p>
+			<p>.A view object that represents a network view named Hometown</p>
+			<p>.An aggregate object that represents Main_Street</p>
+			<p>.A real object that represents a house on Main_Street named 1000_Main_Street</p>
+			<h1 style="font-size: 25px;">UPDATE Function</h1>
+			<p>Use the UPDATE function to change the value of fields on existing objects. The
+UPDATE function does not create objects. If you attempt to update a field on an
+object that does not exist, an error is returned.</p>
+			<p>The following code from sample FLCSX2 demonstrates how to use the UPDATE
+function to change objects in RODM.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="img%20565%202.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+		<h1 style="font-size: 15px;">Results of Executing the UPDATE Function: </h1>
+			<p>The value of the DisplayStatus field
+on real object that represents named 1000_Main_Street is changed to 132
+(Unsatisfactory</p>
+			
+			
+			<h1 style="font-size: 25px;">QUERY Function</h1>
+			<p>Use the QUERY function to determine the value of one or more fields on one or
+more objects. If either the field or the object does not exist, an error is returned.
+The field type and the field value are returned for every field on each object.</p>
+			<p>Although the field type is not specified when querying a field, FLCARODM only
+returns values for the following data types:</p>
+			
+			<h1 style="font-size: 15px;">CLASSID</h1>
+			<p>1</p>
+			<h1 style="font-size: 15px;">CHARVAR</h1>
+			<p>4</p>
+			<h1 style="font-size: 15px;">INTEGER</h1>
+			<p>10</p>
+			<br>
+			<h1 style="font-size: 15px;">OBJECTID</h1>
+			<p>14</p>
+			<h1 style="font-size: 15px;">OBJECTIDLIST</h1>
+			<p>15</p>
+			<h1 style="font-size: 15px;">OBJECTLINK</h1>
+			<p>16</p>
+			<h1 style="font-size: 15px;">OBJECTLINKLIST</h1>
+			<p>17</p>
+			<h1 style="font-size: 15px;">OBJECTNAMET</h1>
+			<p>18</p>
+			<h1 style="font-size: 15px;">SELFDEFINING</h1>
+			<p>19</p>
+			<h1 style="font-size: 15px;">SMALLINT</h1>
+			<p>21</p>
+			<h1 style="font-size: 15px;">SMALLINT</h1>
+			<p>23</p>
+			<h1 style="font-size: 15px;">FIELDID</h1>
+			<p>26</p>
+			<h1 style="font-size: 15px;">ANONYMOUSVAR</h1>
+			<p>30</p>
+			
+			<h1 style="font-size: 15px;">Examples of Using the QUERY Function:</h1>
+			<p>This section contains several examples
+of using the query function.</p>
+			<p>The following code from sample FLCSX3 queries the DisplayResourceOtherData
+field on the Main_Street object:</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="img%20567.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>The result stem from FLCSX3 contains the following information in the order
+specified:</p>
+			<p>.The number of elements in the stem</p>
+			<p>.The FLCARODM return code followed by the RODM return and reason code</p>
+			<p>.The value of the field</p>
+			<p>The following is a partial example of the result stem that is returned when sample
+FLCSX3 is run.</p>
+			<p>3</p>
+			
+			<p style="font-style:oblique;">FLCARODM:0,0,0</p>
+			<p>4</p>
+		 <p style="font-style:oblique;">Constructed In 1889</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>Table 226 describes the result stem that was returned for sample FLCSX3:</p>
+			
+			<p style="font-size: 20px;font-style: italic;">Table 225. SYSIN DD Parameter Descriptions (continued)</p>
+		<table style="width: 100%">
+			<table>
+			
+			<tr>
+            <th>Element Number</th>
+            <th>Element Value</th>
+			<th>Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>3</td>
+					<td>Indicates that the result stem contains 3 elements</td>
+				</tr>
+		
+           
+			
+			
+			</table>
+			<br>
+			<p style="font-size: 20px;font-style: italic;">Table 226. FLCSX3 sample (result stem) (continued)</p>
+			<table>
+			
+			<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>4</td>
+					<td>Indicates the data type of the field (charvar)</td>
+				</tr>
+		
+				<tr>
+				    <td>3</td>
+					<td>Constructed In 1889</td>
+					<td>The value of the field</td>
+				</tr>
+           <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				
+				
+				
+				</style>
+			
+			
+			</table>
+			
+			<p>Sometimes is it useful to know the value of the field identifier for a specified field.
+For example, if you are saving fields in a table, you can save space by saving the
+four-byte field ID instead of the larger field name.</p>
+			<p>Specifying the FIELDID parameter with a value of YES causes FLCARODM to
+return the field identifier value for fields returned by query functions.</p>
+			<h1 style="font-size: 20px;">Notes:</h1>
+			<p>1. The field identifiers can change when RODM is cold-started, so any previouslystored information regarding field identifiers are not used</p>
+			<p>2. The FIELDID parameter can not be used with the LOCATE, XREF, or
+CHILDREN parameter</p>
+			<p>The following code from sample FLCSX3 has been modified by specifying
+FIELDID=YES to return the field ID of the DisplayResourceOtherData field:</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="568%20img.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>The following partial example shows the result stem that is returned when the
+modified sample FLCSX3 is run.</p>
+			<p>4</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p>4</p>
+			<p>60</p>
+			<p style="font-style: oblique">Constructed In 1889</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>Table 227 describes the result stem that was returned for the modified sample
+FLCSX3:</p>
+			
+			<p style="font-size: 20px;font-style: italic;">Table 227. Modified FLCSX3 sample (result stem)</p>
+			<table>
+			
+			
+			<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>3</td>
+					<td>Indicates that the result stem contains 3 elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+		
+				<tr>
+				    <td>2</td>
+					<td>4</td>
+					<td>Indicates the data type of the field (charvar)</td>
+				</tr>
+			<tr>
+				    <td>3</td>
+					<td>60</td>
+					<td>Indicates the field ID of the field</td>
+				</tr>
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+				</table>
+			
+			
+			<br>
+			<p style="font-size: 20px;font-style: italic;">Table 227. Modified FLCSX3 sample (result stem) (continued)</p>
+			<table>
+			
+			<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>4</td>
+					<td>Constructed In 1889</td>
+					<td>The value of the field</td>
+				</tr>
+			
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			
+			
+			
+			
+			</table>
+			
+			<p>Run samples FLCSX1, FLCSX2, and FLCSX3 before you run sample FLCSX4.</p>
+			<p>Sample FLCSX4 provides an example of using two queries to accomplish a task,
+and demonstrates how to determine the field values on a class, which is useful for
+querying default field values or for acquiring all of the objects of a certain class.
+For this example, assume that RODM was empty before sample FLCSX1 was run.
+The first part of sample FLCXS4 queries all of GMFHS_Aggegrate_Objects_Class
+objects in RODM:</p>
+			
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="569%20img.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>The result stem from the first part of sample FLCSX4 contains the following
+information in the order specified:</p>
+			<p>.The number of elements in the stem</p>
+			<p>.The FLCARODM return code followed by the RODM return and reason code</p>
+			<p>.The data type of the field</p>
+			<p>.The number of object IDs in the list</p>
+			<p>.The object ID of the object</p>
+			<p>The following is an example of the result stem that is returned by the first part of
+sample FLCSX4</p>
+			
+			<p>4</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p>15</p>
+			<p>1</p>
+			<p style="font-style: oblique">00010012E05C2A1E</p>
+			<p>Table 228 describes the result stem that was returned for the first part of sample
+FLCSX4:</p>
+			
+			<p style="font-size: 20px;font-style: italic;">Table 228. FLCSX4 sample (result stem)</p>
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>4</td>
+					<td>Indicates that the result stem contains 4 elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td> The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>15</td>
+					<td>Indicates the data type of the field (objectidlist)</td>
+				</tr>
+				<tr>
+				    <td>3</td>
+					<td>1</td>
+					<td>The number of object IDs in the list</td>
+				</tr>
+				<tr>
+				    <td>4</td>
+					<td>00010012E05C2A1E</td>
+					<td>The hexadecimal object ID of the object</td>
+				</tr>
+			
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			<p>The second part of sample FLCSX4 queries the name and status of the object ID
+that was returned from the first query:</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="570%20img.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>The following is an example of the result stem that is returned by the second part
+of sample FLCSX4.</p>
+					
+       <p>6</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+		<p>18</p>	
+			<p style="font-style: oblique">Main_Street</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p>10</p>
+			<p>132</p>
+			<p>Table 229 describes the result stem that was returned for the second part of sample
+FLCSX4:</p>
+			<p style="font-size: 20px;font-style: italic;">Table 229. FLCSX4 sample, second part (result stem)</p>
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>6</td>
+					<td>Indicates that the result stem contains 6 elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code for the first field that was queried</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>18</td>
+					<td>Indicates the data type of the field</td>
+				</tr>
+				<tr>
+				    <td>3</td>
+					<td>Main_Street</td>
+					<td>The number of object IDs in the list</td>
+				</tr>
+				<tr>
+				    <td>4</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code for the second field that was queried</td>
+				</tr>
+			       <tr>
+				    <td>5</td>
+					<td>10</td>
+					<td>The data type of the field (integer)</td>
+				</tr>
+				<tr>
+				    <td>6</td>
+					<td>132</td>
+					<td>The value of the field</td>
+				</tr>
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			<p>Note: The query functions in FLCSX4 were performed by two calls to
+FLCARODM using the MakeRODMCall subroutine. Both functions can be
+performed using one call to FLCARODM by using the XREF parameter. See
+“FLCARODM Command” on page 560 for more information.</p>
+			
+			<h1 style="font-size: 25px;">DELOBJ Function</h1>
+			<p>Use the DELOBJ to delete one or more objects. When an object is deleted, its links
+to all other objects are deleted. Note that fields and links cannot be specified with
+the DELOBJ function.</p>
+			<br>
+			<p>Use care when using the DELOBJ function, because objects that other applications
+or users require might be deleted. Consider using the PURGE function instead. It
+provides a way to remove objects while protecting objects that are associated with
+other applications from being deleted.</p>
+			<p>The following code from sample FLCSX5 uses the DELOBJ to delete the 1000 Main
+Street object.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="571%20img.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			
+			<h1 style="font-size: 15px;">Results of Executing the DELOBJ Function:</h1>
+			<p>After running this program, the
+1000_Main_Street object, its links to Main_Street and, the object, are removed.</p>
+			<h1 style="font-size: 25px;">DELINKA Function</h1>
+			<p>Use the DELINKA function to delete all links to specified fields on an object. You
+do not have to specify the links, because the DELINKA function determines which
+links exist and removes all of them.</p>
+			<p>For an example of using the DELINKA function, see “Delinking Objects” on page
+582.</p>
+			<h1 style="font-size: 25px;">DELINKAB Function</h1>
+			<p>Use the DELINKAB function to delete the specified links between objects.</p>
+			<p>For most objects linked using fields of type ObjectLink, it is not necessary to
+remove a link between objects before defining a new link. Instead, use the
+UPDATE function, which first removes the old link and then defines the new link.
+However, for fields that require a method to perform the link removal, (for
+example, DisplayResourceType), you must use the DELINKAB function.</p>
+			<p>For links that are defined by fields of type ObjectLinkList (for example, Resources),
+you must use the DELINKAB function, because the UPDATE function only adds
+the new link, but it does not delete previously defined links.</p>
+			<p>For an example of using the DELINKAB function, see “Delinking Objects” on page
+582.</p>
+			
+			<h1 style="font-size: 25px;">PURGE Function</h1>
+			<p>Use the PURGE function to remove objects from RODM. Consider using the
+RemvObjs command to remove objects from RODM instead of the PURGE
+function. See the  IBM Tivoli NetView for z/OS User's Guide: NetView Management
+Console for more information about the RemvObjs command.</p>
+			
+			<h1 style="font-size: 25px;">PURGE Function</h1>
+			<p>Use the LOCATE function to search all fields of type CharVar or IndexList which
+have been created as public_indexed for a specified string. An example of a
+publicly indexed field is DisplayResourceName.</p>
+			<p>The LOCATE function returns the object ID of objects that contain a value that
+matches the specified string. Note that the search is not case sensitive.</p>
+			<p>The following code from sample FLCSXL01 finds all of the objects in RODM
+whose DisplayResourceName field has a value of CPU_UTILIZATION.</p>
+			<br>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="572%20img.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>Note that you cannot specify a class or object for the LOCATE function. Therefore,
+StartObject ’’ ’’ is specified, which means search all objects on all classes.</p>
+			<p>The result stem from FLCSXL01 contains a list of the object IDs of the objects
+whose DisplayResourceName matches the comparison string NOT_LOGGED_IN.
+For example, if one object matched this criteria, the following result stem is
+returned:</p>
+			<p>4</p>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<p>15</p>
+			<p>1</p>
+			<p style="font-style: oblique;">000100012E05C2A1E</p>
+			<p>Table 230 describes the result stem that was returned for sample FLCSXL01 if one
+object met the search criteria.</p>
+			
+				<p style="font-size: 20px;font-style: italic;">Table 230. FLCSXL01 sample, one object met the search criteria (result stem)</p>
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>4</td>
+					<td>Indicates that the result stem contains 4 elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td> The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>15</td>
+					<td>Indicates the data type of the field (objectidlist)</td>
+				</tr>
+				<tr>
+				    <td>3</td>
+					<td>1</td>
+					<td>The number of matches found</td>
+				</tr>
+				<tr>
+				    <td>4</td>
+					<td>00010012E05C2A1E</td>
+					<td>The object ID of the object that matched the search criteria</td>
+				</tr>
+			
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			
+			<p>If there were no objects in RODM with a field that matched the comparison
+criteria, FLCARODM returns an Object ID List with zero elements as follows.</p>
+			
+			<p>3</p>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<p>15</p>
+			<p>0</p>
+			<p>Table 231 describes the result stem that is returned for sample FLCSXL01 if no
+objects met the search criteria.</p>
+			<p style="font-size: 20px;font-style: italic;">Table 231. FLCSXL01 sample, no objects met the search criteria (result stem)</p>
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>3</td>
+					<td>Indicates that the result stem contains 3 elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td> The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>15</td>
+					<td>Indicates the data type of the return data (objectidlist)</td>
+				</tr>
+				<tr>
+				    <td>3</td>
+					<td>0</td>
+					<td>Indicates that no matches were found</td>
+				</tr>
+				
+			
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			<br>
+			
+			<h1 style="font-size: 15px;">RodmResult.0</h1>
+			<p>3</p>
+			<h1 style="font-size: 15px;">RodmResult.1</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<h1 style="font-size: 15px;">RodmResult.2</h1>
+			<p>15</p>
+			<h1 style="font-size: 15px;">RodmResult.3</h1>
+			<p>0</p>
+			<h1 style="font-size: 25px;">QUERYALL Function</h1>
+			<p>The QUERYALL function returns the field name, field type, and value for all of the
+fields defined on the specified object. For example, the following example queries
+the fields on the Main_Street object.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="572%20img%201.jpg">
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+
+			<h1 style="font-size: 20px;">Results of Executing the QUERYALL Function:</h1>
+			<p>The result stem from FLCSXQ2
+contains the following information in the order specified:</p>
+			<p>.The number of elements in the stem.</p>
+			<p>.The FLCARODM return code followed by the RODM return and reason code.</p>
+			<p>.The number of fields defined on the object.</p>
+			<p>.A sequence of field specifications. For each field, the field specification contains
+the following information in the order specified:</p>
+			<p>-Return Code</p>
+			<p>-Name</p>
+			<p>-Identifier</p>
+			<p>-Value</p>
+			<p>The field specification information is repeated for each field.</p>
+			<p>The result stem from FLCSXQ2 contains the number of elements in the stem, the
+return code, the number of fields defined on the object, and a sequence of field
+specifications. Each field specification contains the following information:</p>
+			<p>The following is a partial example of the result stem that is returned when sample
+FLCSXQ2 is run.</p>
+			<p>212</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p>51</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p style="font-style: oblique">IsPartOf</p>
+			<p>17</p>
+			<p>0</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p style="font-style: oblique">IsBusNode</p>
+			<p>17</p>
+			<p>0</p>
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<p>Table 232 on page 574 describes the result stem that was returned for sample
+FLCSXQ2.</p>
+			<br>
+			
+			<p style="font-size: 20px;font-style: italic;">Table 232. FLCSXQ2 sample (result stem)</p>
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>212</td>
+					<td>Indicates that the result stem contains 212 elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td> The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>51</td>
+					<td>Indicates the number of fields defined on the object)</td>
+				</tr>
+				<tr>
+				    <td>3</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				 <tr>
+				    <td>4</td>
+					<td>IsPartOf</td>
+					<td>The name of the first field defined on the object.</td>
+				</tr>
+				<tr>
+				    <td>5</td>
+					<td>17</td>
+					<td>The data type of the IsPartOf field. (objectlinklist)</td>
+				</tr>
+				<tr>
+				    <td>6</td>
+					<td>0</td>
+					<td>The value of the IsPartOf field</td>
+				</tr>
+				<tr>
+				    <td>7</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>8</td>
+					<td>IsBusNode</td>
+					<td>The name of the second field defined on the object</td>
+				</tr>
+				<tr>
+				    <td >9</td>
+					<td>17</td>
+					<td>The data type of the IsBusNode field. (objectlink)</td>
+				</tr>
+				<tr>
+				    <td>10</td>
+					<td>0</td>
+					<td>The value of the IsBusNode field</td>
+				</tr>
+			
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			
+			<p>The previous example describes the first two fields in the result stem. Elements 11
+through 212 describe the remaining fields using the same format.</p>
+			<h1 style="font-size: 25px;">QUERYSTR Function</h1>
+			<p>Use QUERYSF to query the value of the specified subfield for a field on the
+specified objects. The following subfields can be queried:</p>
+			
+		
+                     <p>.QUERY</p>
+                   <p>.CHANGE</p>
+                  <p>.NOTIFY</p>
+			     <p>.TIMESTAMP</p>
+                 <p>.PREV_VAL</p> 
+			<p>The following code from sample FLCSXQ3 returns the value of the previous value
+subfield of the DisplayStatus field of the 1000 Main Street object:</p>
+			
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			
+			<img src="575.jpg">
+			<br>
+			<img src="576.jpg">
+			
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			
+			<h1 style="font-size: 20px;">Results of Executing the QUERYSF Function:</h1>
+			<p>The result stem from FLCSXQ3
+contains the following information in the order specified:</p>
+			<p>.The number of elements in the stem</p>
+			<p>.The FLCARODM return code followed by the RODM return and reason code</p>
+			<p>.The data type of the subfield</p>
+			<p>.The subfield value</p>
+			
+			<p>Note: Run samples FLCSX1 and FLCSX2 before you run sample FLCSXQ3.</p>
+			<p>The following is an example of the result stem that is returned when sample
+FLCSXQ3 is run.</p>
+			
+			<p>3</p>
+			<p style="font-style: oblique">FLCARODM:0,0,0</p>
+			<p>10</p>
+			<p>129</p>
+			
+			<p>Table 234 describes the result stem that was returned for sample FLCSXQ3.</p>
+			
+			
+			<p style="font-size: 20px;font-style: italic;">Table 234. FLCSXQ3 sample (result stem)</p>
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element Number</th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>0</td>
+					<td>3</td>
+					<td>Indicates that the result stem contains three elements</td>
+				</tr>
+				<tr>
+				    <td>1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>2</td>
+					<td>10</td>
+					<td>The data type of the subfield (integer)</td>
+				</tr>
+				<tr>
+				    <td>3</td>
+					<td>129</td>
+					<td>The previous value of the field</td>
+				</tr>
+				
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			<p>Note: FLCSX1 set the value to 129 and then FLCSX2 changed the value to 130, so
+the previous value was 129.</p>
+			<h1 style="font-size: 25px;">REBUILD Function</h1>
+			<p>Use the REBUILD function to change objects when the links between objects have
+changed. For every object specified on the REBUILD function, all specified fields
+are updated, all specified links are defined, and all previously defined links are
+removed, with the following exceptions:</p>
+			<p>.LayoutParmList</p>
+			<p>.DetailLayoutParmList</p>
+			<p>.2.9.3.2.7.42 (member)</p>
+			<p>.1.3.18.0.0.2217 (memberArcs)</p>
+			<p>.ComposedOfPhysical</p>
+			<p>.ComposedOfLogical</p>
+			<p>.AggregationChild</p>
+			<p>The relationships listed above are not removed to avoid having objects in RODM
+that have no parent objects defined.</p>
+			<h1 style="font-size: 25px;">Putting It All Together</h1>
+			<p>This section describes sample files that provide examples of using functions and
+parameters.</p>
+			<br>
+			<p>For a description of the subroutines used in the samples, see “Stem Building
+Subroutines” on page 553.</p>
+			<h1 style="font-size: 25px;">FLCSOX02</h1>
+			<p>IBM provides sample FLCSOX02 to demonstrate how to create more complex
+environments with FLCARODM. This sample creates a sysplex model in RODM
+that contains a sysplex, a system in the sysplex, and multiple stacks contained in
+the system. This sample demonstrates a complete application to load RODM with
+objects, and can be used to verify NetView management console installations.</p>
+			<p>See the header information in FLCSOX02 for more complete details on this sample.</p>
+			<h1 style="font-size: 25px;">Building Objects</h1>
+			<p>The following sample uses the StartObject and AddLink routines to create and link
+the following objects:</p>
+			<p>.An aggregate object named Demo_Lan</p>
+			<p>.Two objects that represent LAN segments</p>
+			<p>.An object that represents a bridge that connects the segments</p>
+			
+			<p>.</p>
+			<p>.</p>
+			<p>.</p>
+			<img src="577%20img.jpg">
+			<p style="font-style: italic;">Figure 146. Sample FLCSX6</p>
+			<h1 style="font-size: 25px;">Updating Objects</h1>
+			<p>The following samples provide examples of changing objects using the UPDATE
+function.</p>
+			<br>
+			
+			<h1 style="font-size: 15px;">Using the UPDATE Function With the CHILDREN Parameter:</h1>
+			<p>Figure 147 uses
+the UPDATE function to change the display status of the Demo_Lan aggregate
+object. Note that because CHILDREN=ONLY is specified, all of the Demo_Lan children
+are updated. However, the CHILDREN parameter only updates the first level of
+children.</p>
+			<img src="578.jpg">
+			<p style="font-style: italic;">Figure 147. Sample FLCSX7</p>
+			<h1 style="font-size: 15px;">Using the UPDATE Function With the XREF Parameter:</h1>
+			<p>The XREF parameter can be used to specify fields of the following types:</p>
+			<p>.ObjectLink</p>
+			<p>.ObjectLinkList</p>
+			<p>.ObjectIdList</p>
+			<p>The following samples demonstrate using fields of these types to locate and update
+objects.</p>
+			<img src="577%20img%201.jpg">
+			
+			<p style="font-style: italic;">Figure 148. Sample FLCSX14</p>
+			<p>Figure 149 uses the UPDATE function with the XREF parameter to specify that the
+links defined by the ComposedOfPhysical field are used to determine the list of
+objects to be updated.</p>
+			<img src="578%20img%201.jpg">
+			<p style="font-style: italic;">Figure 149. Sample FLCSX15</p>
+			<p>Figure 150 on page 579 performs the same functions as samples FLCSX14 and
+FLCSX15, which demonstrates that you can perform multiple functions with a
+single function call. Sample FLCSX16 uses the UPDATE function with the XREF
+parameter to specify that the links defined by the first field specified are used to
+determine the list of objects to be updated. For example, sample FLCSX16 specifies
+the following:</p>
+			<br>
+			<img src="579%20img.jpg">
+			<p style="font-style: italic;">Figure 150. Sample FLCSX16</p>
+			<p>Figure 151 demonstrates how to update all of the child objects of a class by using
+the MyObjectChildren field, which is of type ObjectIdList and contains a list of
+object IDs of a class.</p>
+			<img src="579%20img1.jpg">
+			<p style="font-style: italic;">Figure 151. Sample FLCSX17</p>
+			<h1 style="font-size: 20px;">Querying Objects</h1>
+			<p>This section describes using the QUERY function. For each sample, the query
+specification is described and a sample result stem is provided. See “Result Stem”
+on page 583 for more information about result stems.</p>
+			<p>Figure 152 on page 580 queries the names of all of the Demo_Lan objects. The
+names are contained in the MyName field and the list of objects to be queried is
+defined by field 2.9.3.2.7.42 (member).</p>
+			<br>
+			<img src="580%20img.jpg">
+			<p style="font-style: italic;">Figure 152. Sample FLCSX18</p>
+			<p>The following result stem was returned:</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.0:</h1>
+			<p style="font-style: oblique;">11</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.1</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.2</h1>
+			<p style="font-style: oblique;">3</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.3</h1>
+			<p style="font-style: oblique;">18</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.4</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.5</h1>
+			<p style="font-style: oblique;">Segment_1</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.6</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.7</h1>
+			<p style="font-style: oblique;">18</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.8</h1>
+			<p style="font-style: oblique;">Bridge_1</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.9</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.10</h1>
+			<p style="font-style: oblique;">18</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.11</h1>
+			<p style="font-style: oblique;">Segment_2</p>
+			<p>FLCARODM:0,0,0 indicates that querying the cross reference field 2.9.3.2.7.42 was
+successful.</p>
+			<p>Figure 153 on page 581 queries all objects in RODM to determine which objects
+have a display name of IP_NETWORKS. Note that call StartObject ’’ ’’ means all objects in RODM.</p>
+			<br>
+			<img src="581.jpg">
+			<p style="font-style: italic;">Figure 153. Sample FLCSXL02</p>
+			<p>The following result stem was returned:</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.0</h1>
+			<p style="font-style: oblique;">5</p>
+			<h1 style="font-size: 15px;">RodmResult.1</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<h1 style="font-size: 15px;">RodmResult.2</h1>
+			<p style="font-style: oblique;">1</p>
+			<h1 style="font-size: 15px;">RodmResult.3</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<h1 style="font-size: 15px;">RodmResult.4</h1>
+			<p style="font-style: oblique;">18</p>
+			<h1 style="font-size: 15px;">RodmResult.5</h1>
+			<p style="font-style: oblique;">2.9.3.2.7.4=IP_Networks</p>
+			
+			<p>The second stem variable indicates that there was one object that matched the
+criteria. The fifth stem variable provides the name of the object.
+Figure 154 queries the display names of all Demo_Lan objects that contain the
+word Segment. Note that the FILTER parameter is used with the XREF parameter
+to refine the query</p>
+			<img src="581%20img%201.jpg">
+			<p style="font-style: italic;">Figure 154. Sample FLCSXF1</p>
+			<p>The following result stem was returned:</p>
+			<h1 style="font-size: 15px;">RodmResult.0</h1>
+			<p style="font-style: oblique;">8</p>
+			<h1 style="font-size: 15px;">RodmResult.1</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<h1 style="font-size: 15px;">RodmResult.2</h1>
+			<p style="font-style: oblique;">2</p>
+			<h1 style="font-size: 15px;">RodmResult.3</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<br>
+			
+			<h1 style="font-size: 15px;">RodmResult.4</h1>
+			<p style="font-style: oblique;">18</p>
+			<h1 style="font-size: 15px;">RodmResult.5</h1>
+			<p style="font-style: oblique;">Segment_1</p>
+			
+			<h1 style="font-size: 15px;">RodmResult.6</h1>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<h1 style="font-size: 15px;">RodmResult.7</h1>
+			<p style="font-style: oblique;">18</p>
+			<h1 style="font-size: 15px;">RodmResult.8</h1>
+			<p style="font-style: oblique;">Segment_2</p>
+			<h1 style="font-size: 20px;">Delinking Objects</h1>
+			<p>This section describes how to use the DELINKA and DELINKAB functions to
+				remove links between objects.</p>
+			<p>Figure 155 also uses the DELINKA function to delete all of the links defined by the
+PhysicalConnPP field of the Bridge_1 object.</p>
+			<img src="582%20img%2011.jpg">
+			<br>
+			<p>Figure 158 uses the DELINKAB function to remove specific links to the Bridge_1
+object.</p>
+			<img src="583%20img.jpg">
+			<p style="font-style: italic;">Figure 158. Sample FLCSX11</p>
+			
+			<h1 style="font-size: 20px;">Deleting Objects</h1>
+			<p>Figure 159 uses the DELOBJ function to delete the Demo_Lan object. The
+CHILDREN parameter specifies that the child objects of the Demo_Lan object are
+also deleted.</p>
+			
+			<p style="font-style: italic;">Figure 159. Sample FLCSX8</p>
+			<h1 style="font-size: 20px;">Working with IndexList Fields</h1>
+			<p>Use the SetIndexList subroutine to change IndexList fields.
+Figure 160. provides an example of changing an IndexList type field. The
+ExceptionViewList field of the Demo_Lan object is updated with the value test.
+Note: Use caution when updating IndexList type fields, because this function
+overwrites the previous value of the field and the previous value is lost.</p>
+			<img src="583%20img%201.jpg">
+			
+			
+			
+			<p style="font-style: italic;">Figure 160. Sample FLCSX22</p>
+			<h1 style="font-size: 20px;">Result Stem</h1>
+			<p>A result stem is returned each time the FLCARODM command is run. The format
+of the result stem depends on the operation that is performed and whether the
+operation completed successfully.</p>
+			<p>The first two elements (0 and 1) of any result stem always contain the same
+information. The 0 element (RodmResult.0) contains the total number of elements
+in the stem. The 1 element contains the following information in the order
+specified:</p>
+			<br>
+			<p>1. FLCARODM return code</p>
+			<p>2. RODM return code</p>
+            <p>3. RODM reason code</p>
+			<p>For example, assume that the FLCARODM command was issued with the BUILD
+function specified and the command completed successfully with no errors. The
+following result stem is returned:</p>
+			<p>1</p>
+			<p style="font-style: oblique;">FLCARODM:0,0,0</p>
+			<p>1 indicates the result stem contains one element and FLCARODM:0,0,0 indicates that
+the FLCARODM command completed with no FLCARODM or RODM errors.
+For a description of the FLCARODM return codes, see “Return Codes” on page
+591. For a description of the RODM return and reason codes, see “RODM Return
+and Reason Codes” on page 459.
+The following sections describe result stems based on the success or failure of an
+operation.</p>
+			<h1 style="font-size: 15px;">Result Stems for Successful Query Operations: </h1>
+			<p>The structure of the result stem
+for successful query operations depends on the data type of the field that is
+queried and whether the XREF parameter was specified.
+If no error occurs while executing the QUERY function, and the XREF parameter
+was not specified then the format of the result stem is:</p>
+			
+			<p style="font-style: italic;">Table 235. QUERY function, XREF parameter not specified (result stem)</p>
+			
+			<table>
+			
+				<tr>
+            <th style="width: 150px;">Element </th>
+            <th style="width: 100px">Element Value</th>
+			<th style="width: 300px;">Explanation</th>
+            </tr>
+				<tr>
+				    <td>RodmResult.0</td>
+					<td>x</td>
+					<td>The number of elements in the result stem</td>
+				</tr>
+				<tr>
+				    <td>RodmResult.1</td>
+					<td>FLCARODM:0,0,0</td>
+					<td>The FLCARODM return code and the RODM return and reason code</td>
+				</tr>
+				<tr>
+				    <td>RodmResult.2</td>
+					<td>10</td>
+					<td>The data contained in the field</td>
+				</tr>
+				
+				
+			 <style>
+				
+			   table ,tr,td,th{
+				   border: 1px solid black;
+				   border-collapse: collapse;
+				   
+			   }
+				
+				</style>
+			</table>
+			
+			<p>If no error occurs while running the Query function, and the XREF parameter was
+specified, then the format of the result stem is slightly different. For each object, an</p>
+			
+			<br>
+			<p>additional return code indicates the success or failure of the cross reference field
+query, followed by the number of objects that were cross referenced.</p>
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">xref_field_info</h1>
+			<p>The structure containing the return code data for the cross referenced field,
+the number of cross referenced objects, and the query results for each
+object. The format of the req_field_info structure is:</p>
+			<img src="585%20img%20.jpg">
+			
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">number_of_cross_referenced_objects</h1>
+			
+			<p>The number indicating the number of objects that resulted from querying
+the cross reference field.</p>
+			<h1 style="font-size: 15px;">field_info</h1>
+			<p>The structure containing the return code data, field ID, and field value for
+each field queried on each cross referenced object. The format of the
+field_info structure depends on the field type of the fields that were
+queried. This field type can always be found in the second element of the
+field_info structure.</p>
+			<p>For numeric, and character data types, the field_info format is:</p>
+			<p style="font-style: italic;">Numeric & Character:</p>
+			
+			
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">return_code_data</h1>
+			<p>The numeric or character data contained in the field For example, querying the other data field of an object can result in:</p>
+			<br>
+			<img src="586%20img.jpg">
+			
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">return_code_data</h1>
+			<p>Data indicating that no errors occurred.</p>
+			<h1 style="font-size: 15px;">field_type</h1>
+			<p>Decimal value (16) indicating that the data type is OBJECTLINK.</p>
+			
+			<h1 style="font-size: 15px;">field_ID</h1>
+			<p>The field identifier, in decimal, of the field to which the queried field is linked.</p>
+			<p>OBJECTLINKLIST: For fields of OBJECTLINKLIST data types, the format of the result stem is:</p>
+			<img src="586%20img%201.jpg">
+			
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">return_code_data</h1>
+			<p>Data indicating that no errors occurred.</p>
+			<h1 style="font-size: 15px;">field_type</h1>
+			<p>Decimal value (17) indicating that the data type is OBJECTLINKLIST</p>
+			<h1 style="font-size: 15px;">relations</h1>
+			<p>The number of relations to the field that was queried</p>
+			<h1 style="font-size: 15px;">relation definition</h1>
+			<p>Information regarding which objects are linked to the object, using the field that was queried</p>
+			<p>The format is:</p>
+			<img src="586%20img%202.jpg">
+			<p>The object ID and field ID, can repeat until the number of relations indicated have been presented.</p>
+			
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">object_ID</h1>
+			<p>he object identifier, in hexadecimal, of the object to which the field is related.</p>
+			<h1 style="font-size: 15px;">field_ID</h1>
+			<p>The field identifier, in decimal, of the field to which the queried field is related.</p>
+			<h1 style="font-size: 20px;">ERROR CONDITIONS:</h1>
+			<p>For error conditions, the format of the result stem
+depends on the operation that was performed, and where the error occurred.
+Regardless of the error situation, the following five pieces of information are
+always be returned.</p>
+			<img src="587%20img.jpg">
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">return_code_data</h1>
+			<p>FLCARODM_return_code is the return code from the FLCARODM
+command processor. A value of 2000 indicates the error occurred in
+RODM, and the RODM_return_code and RODM_reason_code must be
+inspected. See “Return Codes” on page 591 for other return code value
+definitions. Refer to the IBM Tivoli NetView for z/OS Resource Object Data
+Manager and GMFHS Programmer's Guide for more information.</p>
+			<h1 style="font-size: 15px;">operation_code</h1>
+			<p>The operation that FLCARODM was attempting to perform when the error
+occurred. FLCARODM might perform several different operations, per
+function requested. The FLCARODM operations are discussed later.</p>
+			<h1 style="font-size: 15px;">object_ID</h1>
+			<p>The RODM object identifier, in hexadecimal, of the object that the
+FLCARODM operation failed for. If it is not known it is null.</p>
+			<h1 style="font-size: 15px;">object_class</h1>
+			<p>The RODM object class of the object for which the FLCARODM operation
+failed. If it is not known it is null.</p>
+			<br>
+			
+			<h1 style="font-size: 15px;">object_name</h1>
+			<p>The RODM object name of the object for which the FLCARODM operation
+failed. If it is not known it is null.</p>
+			<h1 style="font-size: 15px;">Locate:</h1>
+			<p>The format of the result stem for Locate is identical to that of the Query
+function for an Object ID List. Error conditions for Locate are the same as Query
+except that the Object Class and Object Name have null values.</p>
+			
+			<h1 style="font-size: 25px;">MultiSystem Manager Operations</h1>
+			<p>The operations that FLCARODM performs are:</p>
+			<img src="588%20img.jpg">
+			<p>For operation IDs 000, 100, 101, 102, 103, and 104 no additional information other
+than what was previously discussed is present. For example, the following
+attempts to Build a single object in an object class that doesn't exist (FLCSX12).</p>
+			<img src="588%20img%201.jpg">
+			<p>The information returned indicates that an error occurred (2000,8,52) while
+attempting to create (100) an object named (Dave) in the (No_Class) class. The
+return code 2000 indicates that the error was a RODM error. The description for
+the RODM return code/reason code (8/52) states that the referenced object class
+No_Class does not exist. Thus, a complete description of the error that occurred is
+returned. For this simple example. this might seem to be more information than is
+needed, but since FLCARODM supports multiple operations on multiple objects,
+with multiple fields and relations, this level of detail becomes necessary for more
+complex invocations.
+For operation IDs 200, 201, and 203, details regarding the field that was operated
+on is also returned. The format of the field information is:</p>
+			<br>
+			<img src="589%20img.jpg">
+			
+			<p>Where:</p>
+			<h1 style="font-size: 15px;">field_name</h1>
+			<p>The field name or field identifier where the operation is performed</p>
+			<h1 style="font-size: 15px;">field_type</h1>
+			<p>The data type for the field where the operation is performed</p>
+			<h1 style="font-size: 15px;">field_value</h1>
+			<p>The specified field value for the field where the operation is performed</p>
+			<p>An example error can be:</p>
+			<img src="589%20img%201.jpg">
+			<p>The information returned indicates that an error occurred (1048,0 0) while
+attempting to change (200) the field (DisplayStatus) which is of type (Integer) to a
+value of (129) on an object named (1000_Main_Street) in the
+(GMFHS_Managed_Real_Objects_Class) class. The return code 1048 indicates that
+the field type specified is not valid. The field type must be a decimal value
+representing the data type and the word Integer was specified, which is incorrect.
+Use the decimal value 10.</p>
+			<p>For operation IDs 202, 303, and 304, the field that was being operated on is also
+returned. The only additional data is the field name or field ID, the field type and
+field value are not present, because they do not apply to these operations. The
+following is what can be returned when you try to query a field that does not
+exist.</p>
+			<img src="589%20img2.jpg">
+			<p>The information returned indicates that an error occurred (2000,4 56) while
+attempting to query (202) the field (My_New_Field) on an object named
+(1000_Main_Street) in the (GMFHS_Managed_Real_Objects_Class) class. A RODM
+error occurred, because the field is not defined to the
+GMFHS_Managed_Real_Objects_Class class.</p>
+			<p>For operation IDs 300, 301, and 302, the relation that was being operated on is also
+returned. The format of the relation data is:</p>
+			<img src="589%20img%203.jpg">
+			
+			<p>Where:</p>
+			<br>
+			<h1 style="font-size: 15px;">field_name</h1>
+			<p>The field name or field identifier that is being used to relate to another object</p>
+			<h1 style="font-size: 15px;">object_ID</h1>
+			<p>The object identifier of the object that is related to the previous object</p>
+			
+			<h1 style="font-size: 15px;">object_name</h1>
+			<p>The name of the object that is related to the previous object</p>
+			
+			<h1 style="font-size: 15px;">linked_field_name</h1>
+			<p>The name of the field on the object that is being used to relate to the previous object</p>
+			<p>As stated before, the reason that the error information is so detailed is that
+FLCARODM proceeds when it encounters RODM errors (FLCARODM return
+codes between 2000 and 2999). It does not proceed if FLCARODM itself determines
+that the input data is corrupt, or an internal error occurs. So the following error
+output can result from one FLCARODM invocation:</p>
+			<img src="590%20img.jpg">
+			<br>
+			<p>When no errors occur, FLCARODM only sends one return code FLCARODM:0,0,0
+as stated before, for all operations except for Query. For Query, an individual
+return code is sent for every field queried, either indicating success and containing
+the data, or indicating failure with the cause of the failure. This enables the calling
+application to determine which fields where queried successfully and which ones
+failed. The application can then extract the information for the successful queries,
+and handle the unsuccessful queries as appropriate. For example:</p>
+			<img src="591%20img.jpg">
+			<p>This indicates that the first field was successfully queried, and that it has a
+character field with a value of Constructed In 1889. The second field queried was
+an object link, and the object ID and field ID are returned. The third field queried
+resulted in an error (2000,4,56), and the error information is returned. The fourth
+field queried was an object link list, and the information regarding the objects is
+returned. Note that even though querying the third field resulted in an error, FLCARODM continued on and sent back the data regarding the fourth field.</p>
+			
+			<h1 style="font-size: 20px;">Return Codes</h1>
+			<p>The FLCARODM return codes are documented here.
+1000 No object data was found. Either the command was not issued using the
+NetView PIPE command, or nothing was found in the PIPE data stream.
+1004 An incorrect function was requested. The following functions are valid:</p>
+			<p>BUILD</p>
+			<p>DELINKA</p>
+			<p> DELINKAB</p>
+			<p>DELOBJ</p>
+			<p>PURGE</p>
+			<p>QUERY</p>
+             <p>UPDATE</p>
+			<p>1012 The RODM name specified was either null, or its length was greater than
+				eight characters.</p>
+              <p>1016 The application name specified was either null, or its length was greater than eight characters.</p>
+			<br>
+			<p>1020 The class specified was not valid, possible reasons are: v For class names, the length was greater than 64 characters, or the length
+was zero and an object ID was not specified. v For class ids, the value following the #, was either non numeric, or the
+				value was too large to be stored in four bytes.</p>
+   <p>1024 The object specified was not valid, possible reasons are: v For object names, the length was greater than 254 characters, or was
+zero, and no object class was specified. v For object ids, the value of the data following the #, was not 16 EBCDIC
+	   characters representing a hexadecimal value.</p>
+			<p>1028 The number of objects specified was either an incorrect number, or was too large.</p>
+               <p>1032 The number of fields specified was either an incorrect number, or was too large.</p>
+                    <p>1036 The number of relations specified was either an incorrect number or was too large.</p>
+                   <p>1044 The field specified was not valid, possible reasons are: v For field names, the length was greater than 64 characters, or was zero. v For field ids, the value following the #, was either non numeric, or the value was too large to be stored in four bytes.</p>
+                         <p>1048 The field type specified was either an incorrect number, or was too large.</p>
+                      <p>1052 The field value specified was not valid. If the field type indicates that the field value is numeric, then the field value was either an incorrect number, or was too large. If the field type indicates that the field value is character
+						  data, then the field value is greater than 254 characters in length.</p>
+                        <p>1056 The value of fields and relations were both zero on an Update or Query operation. Update requires at least one field or link to update, and Query requires exactly one field to query. 1060 The specified field name to link to was either null, or its length was greater than 64 characters.</p>
+                 <p>1064 The specified class name to link to was either null, or its length was
+					 greater than 64 characters.</p>
+                         <p>1068 The specified object name to link to was either null, or its length was greater than 254 characters.</p>
+               <p>1072 The specified field name to link to was either null, or its length was greater
+				   than 64 characters.</p>
+			<p>1076 For the function specified, no fields are allowed.</p>
+			<p>1080 For the function specified, no relations are allowed.</p>
+                  <p>1084 The data type returned for the field that was queried is not supported by FLCARODM.</p>
+                   <p>1088 The value supplied for the RODMRTRY parameter is not valid.
+					   1092 The value supplied for the RODMINT parameter is not valid.</p>
+			<p>1096 The value supplied for the CHILDREN parameter is not valid.</p>
+            <p>1100 The value supplied for the STATUS parameter is not valid.</p>
+			<br>
+			<p>1104 The value supplied for the TIME parameter is not valid.</p>
+			<p>1108 The value supplied for the TRACE parameter is not valid.</p>
+              <p>1112 A parameter specified is not valid or unauthorized for the function specified.</p>
+              <p>1116 The number of object definitions found was less than the number of objects specified.</p>
+			<p>1120 All expected data has been processed, but more data still exists.</p>
+			<p>1124 The object definition was not complete.</p>
+             <p>1128 The number of field definitions found was less than the number of fields specified.</p>
+			<p>1132 The field definition was not complete.</p>
+			<p>1136 The number of relations found was less than the number specified.</p>
+			<p>1140 The relation definition was incomplete.</p>
+			<p>1144 The number of fields specified was incorrect for the XREF function.</p>
+			<p>1148 The value supplied for the LOCATE parameter is not valid.</p>
+			<p>1152 The value supplied for the SF parameter is not valid.</p>
+			<p>1156 The value supplied for the FIELDID parameter is not valid.</p>
+              <p>1160 The value supplied for the FILTER parameter is not valid.
+				 <p> 1164 Too many field definitions were specified for the function specified. 19XX All error codes from 1900 to 1999 indicates that an internal error occurred in FLCARODM while processing the object data. Please report this return code to the appropriate service representative, along with the associated error information.</p>
+              <p>2000 An error occurred in RODM while processing a request. The RODM return code and reason code provide more detailed information.</p>
+             <p>2004 There were no children on the object specified. For a function with the XREF option, this return code means that there were no relationships to traverse.</p>
+			<p>2008 The field indicated to be changed on an object's children does not exist on a child object. For a function with the XREF option, this return code means the field did not exist on any of the objects that were cross-referenced.</p>
+              <p>4000 An internal error has occurred in FLCARODM while attempting to perform the indicated operations. Please report this return code to the
+				  appropriate service representative, along with the associated error information.</p>
+			<p>4004 FLCARODM is unable to get necessary storage.</p>
+		<p>4008 FLCARODM has detected a condition that must not occur. Please report this return code to the appropriate service representative, along with the associated error information.</p>
+		<p>4012 An attempt was made to delete a link, but the data type of the specified field was not of type ObjectLink or ObjectLinkList.</p>
+              <p>4016 No Member or MemberArcs field is defined on the specified object, so the function can not be performed on the object's children.</p>
+			<br>
+		<p>4020 Filter error.</p>
+			
+			<h1 style="font-size: 25px;">Object Data Stream Detail</h1>
+		<p>The data stream is a low-level means of specifying data to RODM for creation and update of objects. Developers that use the Stem Building Routines do not need to specify the Data Stream at this low level.</p>
+			<h1 style="font-size: 20px;">Data Stream Explanation</h1>
+		<p>The format of the data stream consists of the total number of records in the REXX stem (X.0), followed by the number of objects to be defined, followed by each object definition.</p>
+		<img src="594%20img.jpg">
+		<p>Each object definition consists of the name of the object class, the object name, the number of fields and relations to be defined, followed by the field and relation definitions.</p>
+			<img src="594%20img%201.jpg">
+		
+		<br>
+		
+		<p>Each field definition consists of the name of the field, the data type of the field value, and the field value.</p>
+		<img src="595%20img.jpg">
+		<p>Each relation definition consists of the name of the field present on this object that is related to another object, the class and object name the field is related to, followed by the field on the related object.</p>
+		<img src="595%20img%201.jpg">
+		<p>A data stream consists of individual data stems.</p>
+		
+		<h1 style="font-size: 20px;">Data Stem Detail</h1>
+		<p>This section details the format of the REXX object data stem. It is structured in the following format:</p>
+		<img src="595%20img%202.jpg">
+		<p>Where:</p>
+		<h1 style="font-size: 15px;">elements</h1>
+		<p>The total number of elements defined for the stem variable.</p>
+		<h1 style="font-size: 15px;">objects</h1>
+		<p>The number of objects where the operation is performed. This value must be at least one.</p>
+		<h1 style="font-size: 15px;">object_definition</h1>
+		<p>Defines the objects to be modified. The object definitions can be repeated, and the number of object definitions must be equal to the number indicated by objects.</p>
+		<h1 style="font-size: 15px;">Object Definition:</h1>
+		<p>The format of object_definition follows. Note: The letter 'o' is used in the stem variable since the actual stem value varies.</p>
+		<img src="595%20img%203.jpg">
+		<br>
+		<img src="596%20img.jpg">
+		
+		<p>Where:</p>
+		<h1 style="font-size: 15px;">object_class</h1>
+			<p>The object class on which to be operated. This must be blank if an object ID is specified. This must be null if the Locate function is specified.</p>
+		<h1 style="font-size: 15px;">object</h1>
+			<p>The name or object ID of the object on which to be operated. The object ID
+is specified by prefixing it with the #, followed by the hexadecimal object
+ID value. If the first character is not a #, then the data is interpreted as an
+object name. If an object ID is specified then the object class is ignored. If a
+null is specified '', then the operation is performed on the class. This is
+only valid for Query operations. This must be null if the Locate function is
+specified.</p>
+			<h1 style="font-size: 15px;">fields</h1>
+			<p>The number of fields on the object to be modified or queried.</p>
+			<h1 style="font-size: 15px;">field_definition</h1>
+			<p>Defines the fields to be modified or queried. The field definitions can be
+repeated, and the number of field definitions must be equal to the number
+indicated by fields.</p>
+			<h1 style="font-size: 15px;">relation_definition</h1>
+			<p>Defines the relations to be created/deleted between objects. The relation
+definitions can be repeated, and the number of definitions must be equal to
+the number indicated by relations.</p>
+			<h1 style="font-size: 15px;">Field Definition:</h1>
+			<p>The format of field_definition follows. Note: The letter f is used
+in the stem variable since the actual stem value varies.</p>
+			
+			<img src="596%20img%201.jpg">
+			<p>where</p>
+			<h1 style="font-size: 15px;">field</h1>
+			<p>The name or field ID of the field to be modified or queried. The field ID is
+specified by prefixing it with the #, followed by the decimal numeric field
+ID value. If the first character is not a #, then the data is interpreted as a
+field name.</p>
+		<h1 style="font-size: 15px;">field_type</h1>
+			<p>A decimal integer value corresponding to the data type identifier of the
+field. The following data types are supported for Build and Update.</p>
+			<img src="596%20img%202.jpg">
+			<br>
+			<img src="597%20img.jpg">
+			<p>For a list of data types supported by the BUILD and UPDATE functions,
+see“BUILD Function” on page 564.
+For a list of data types supported by the QUERY function, see “QUERY
+Function” on page 566.</p>
+			
+			<h1 style="font-size: 15px;">field_value</h1>
+			<p>The value that is assigned to a field.
+Field type and field value are required components of a field definition for
+the Build, Update and Locate functions. They must not be specified for the
+other functions. When the XREF parameter is specified (Build and Update
+functions only) with a value of 1STFIELD, the field type and field value
+must not be specified for the first field on each object. For the Locate
+function, field_value is the comparison string.</p>
+			<h1 style="font-size: 15px;">Relation Definition:</h1>
+			<p>The format of relation_definition follows. Note: The letter r
+is used in the stem variable since the actual stem value varies.</p>
+			<img src="597%20img%201.jpg">
+			<p>where</p>
+			
+			<h1 style="font-size: 15px;">field_to_link</h1>
+			<p>The name or field ID on object to be related to another field. The field ID is
+specified by prefixing it with the #, followed by the decimal numeric field
+ID value. If the first character is not a #, then the data is interpreted as a
+field name.</p>
+			
+			<h1 style="font-size: 15px;">object_class_to_link_to</h1>
+			<p>The name of the object class of the object to be related to the object being
+defined.</p>
+			<h1 style="font-size: 15px;">object_to_link_to</h1>
+			<p>The name or object ID of the object to be related to the object being
+defined. The object ID is specified by prefixing it with the #, followed by
+the hexadecimal object ID value. If the first character is not a #, then the
+data is interpreted as an object name. If an object ID is specified then the
+object_class_to_link_to is ignored.</p>
+			<h1 style="font-size: 15px;">field_to_link_to</h1>
+			<p>The name or field ID on object_to_link_to to be related to field_to_link on
+object The field ID is specified by prefixing it with the #, followed by the
+decimal numeric field ID value. If the first character is not a #, then the
+data is interpreted as a field name.</p>
+			
+			<h2 style="20px;">RODM Collection Manager</h2>
+		<p>The RODM collection manager actively manages the contents of views and
+aggregates based on criteria that you set. These criteria can be a naming
+convention, a set of statuses, or both. A view that is managed by the RODM
+collection manager can have characteristics of both network and exception views.</p>
+		
+		<br>
+			
+			<p>NetView management console administrators have access to the RODM collection
+manager on their desktops. You can also manage views with complex criteria
+beyond names and statuses.</p>
+			<p>RODM Collection Manager dynamically manages the views or aggregates. This
+means that RODM Collection Manager continually updates the views or
+aggregates, so that you can add, change, or delete collections.</p>
+			
+			<p>For information about using collection definition objects, see “Using the Collection
+Definition Objects” on page 142. For information about using RODM Collection
+Manager with NetView management console, see the IBM Tivoli NetView for z/OS
+User's Guide: NetView Management Console.</p>
+			
+			<h2 style="20px;">BLDVIEWS</h2>
+			<p>BLDVIEWS is a REXX exec that you can use to create aggregate objects and
+customized views. It works with objects of the GMFHS, SNA topology manager, and MultiSystem Manager data models. BLDVIEWS also provides an easy way to
+map a default set of commands to generic commands for key MultiSystem
+Manager resources by enabling generic command support from a NetView
+management console for MultiSystem Manager discovered network resource
+objects. Use BLDVIEWS to create the following types of views:</p>
+			<p>Configuration backbone</p>
+			<p> Configuration logical</p>
+			<p>Configuration physical</p>
+			<p>Configuration peer</p>
+			<p>Exception</p>
+			<p>More detail logical</p>
+			<p>More detail physical</p>
+			<p> Network</p>
+			<p>BLDVIEWS uses control statements to specify the names of the views and
+aggregates you want to create and the resources that you want the views and
+aggregates to contain. Control statements use keywords and values to specify the
+parameters. When specifying resources, you do not need to know the RODM
+classes or formats of the RODM names. To specify a resource, type the name of the
+resource that is displayed (the value of the RODM DisplayResourceName field).
+You can also specify ALL or a wild card name.</p>
+			<p>Use BLDVIEWS to link existing resources (objects) in RODM to views and
+aggregate objects, or to modify a subset of the more commonly used fields on
+existing resources. You can create new views and aggregates or update existing
+views and aggregates. BLDVIEWS supports RODM objects created by MultiSystem
+Manager and SNA topology manager. However, BLDVIEWS does not create objects
+on those classes. Use BLDVIEWS to create resources on GMFHS classes.</p>
+			<p>The control statements are passed to BLDVIEWS using one of the following
+methods:</p>
+			
+			<p>.DSIPARM member (for example, BLDVIEWS MYMEMBER)</p>
+			<p>.A fully qualified cataloged sequential data set (for example, BLDVIEWS ESP.GAF.DATA(MYDEFS)</p>
+			<p>.A stem array, collected and passed using the PIPE command (for example, MyStem.0=2; MyStem.1=VIEW ....; MyStem.2=BRIDGE ...; 'PIPE STEM MyStem. COLLECT | NETV BLDVIEWS | CONSOLE')</p>
+			<br>
+			<p>BLDVIEWS also provides a REXX exec called DELVIEWS that you can use to delete views or groups of views with a specified prefix.</p>
+			
+			<h1 style="font-size: 20px;">BLDVIEWS Processing</h1>
+			<p>BLDVIEWS queries RODM for specified objects and then links these objects to the
+views or aggregate objects that you specify. BLDVIEWS can modify certain fields
+on objects in any class in RODM, and can create objects on GMFHS classes.</p>
+			<p>The RODM Collection Manager provides fully dynamic view creation and
+maintenance, and it is compatible with the BLDVIEWS control statements. Refer to
+the NetView Command online help for FLCV2RCM and the NetView management
+console online help for more information about the RODM Collection Manager.</p>
+			<p>All combinations of classes are supported.</p>
+			<h1 style="font-size: 15px;">Views</h1>
+			<p>BLDVIEWS supports the following types of views:</p>
+			<p>.Network</p>
+			<p>.Configuration Peer</p>
+			<p>.Configuration Backbone</p>
+			<p>.Configuration Connectivity</p>
+              <p>.More Detail</p>
+			<p>With BLDVIEWS, you can specify any supported view layout type, but BLDVIEWS
+uses only the following view layout types:</p>
+			<p>.Hierarchical</p>
+			<p>.Ellipse</p>
+              <p>.Grid</p>
+			<h1 style="font-size: 15px;">Aggregate Objects</h1>
+			
+			<p>Use the AGGregate control statement and AGGChild control statements to create
+your own aggregate resources and specify which objects you want linked to the
+aggregate. BLDVIEWS links the AGGChild resources to the AGGregate resource by
+linking both the AggregationParent and AggregationChild field and the
+ComposedOfLogical and IsPartOf fields.</p>
+			
+			<h1 style="font-size: 20px;">BLDVIEWS Control Statements</h1>
+			<p>The following control statements are supported</p>
+			<h1 style="font-size: 15px;">AGG</h1>
+			<p>Specifies the aggregate resources (GMFHS aggregate objects). The
+aggregate resources that you specify can be existing resources, or you can
+create an aggregate and link the resources to the aggregate resource on the
+AGGChild control statements that follow.</p>
+			<h1 style="font-size: 15px;">AGGCHILD</h1>
+			<p>Specifies the aggregation children that you want linked to the aggregate
+resource that was previously defined.</p>
+			<h1 style="font-size: 15px;">BBVIEW</h1>
+			<p>Defines a configuration backbone view, which contains the resources on
+the control statements that follow it.</p>
+			<br>
+			
+			<h1 style="font-size: 15px;">CDRM</h1>
+			<p>Specifies VTAM CDRM resources.</p>
+			<h1 style="font-size: 15px;">CDRSC</h1>
+			<p>Specifies VTAM CDRSC resources.</p>
+			<h1 style="font-size: 15px;">CIRCUIT</h1>
+			<p>Specifies the APPN transmission group circuits, and subarea circuits.</p>
+			<h1 style="font-size: 15px;">CLASS</h1>
+			<p>Specifies the global RODM class that contains the resources on the OTHER
+control statements that follow it. This control statement is used only for the
+OTHER control statement and you can use it to specify the RODM class
+globally without having to specify it on each OTHER control statement.</p>
+			<h1 style="font-size: 15px;">CLUSTER</h1>
+			<p>Specifies the MultiSystem Manager or APPNTAM cluster aggregate resource.</p>
+			<h1 style="font-size: 15px;">DOMAIN</h1>
+			<p>Specifies APPN domains.</p>
+			<h1 style="font-size: 15px;">ENODE</h1>
+			<p>Specifies APPN end nodes.</p>
+			<h1 style="font-size: 15px;">EVIEW</h1>
+			<p>Defines an exception view. Note: Objects specified after the EVIEW statement only participate in the
+exception view if CREATE=Y or CREATE=B is specified on the EVIEW
+statement. If CREATE=N is specified, these objects are ignored, and do not
+participate in the exception view</p>
+			<h1 style="font-size: 15px;">GW_NCP</h1>
+			<p>Specifies NCP gateway resources.</p>
+			<h1 style="font-size: 15px;">HOST_NODE</h1>
+			<p>Specifies the host PUs (PU Type 5 nodes).</p>
+			<h1 style="font-size: 15px;">IC_NODE</h1>
+			<p>Specifies APPN interchange nodes.</p>
+			<h1 style="font-size: 15px;">INTERFACE</h1>
+			<p>Specifies TCP/IP adapter resources.</p>
+			<h1 style="font-size: 15px;">IP_BRIDGE</h1>
+			<p>Specifies TCP/IP bridge aggregate resources.</p>
+			<h1 style="font-size: 15px;">IP_HOST</h1>
+			<p>Specifies TCP/IP host aggregate resources.</p>
+			<h1 style="font-size: 15px;">IP_HUB</h1>
+			<p>Specifies TCP/IP hub aggregate resources.</p>
+			<h1 style="font-size: 15px;">IP_LINK</h1>
+			<p>Specifies TCP/IP interface link resources.</p>
+			<h1 style="font-size: 15px;">IP_LOCATION</h1>
+			<p>Specifies TCP/IP location aggregate resources.</p>
+			<h1 style="font-size: 15px;">IP_ROUTER</h1>
+			<p>Specifies TCP/IP router aggregate resources.</p>
+			<h1 style="font-size: 15px;">IP_SEGMENT</h1>
+			<p>Specifies TCP/IP segment aggregate resources.</p>
+			<br>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+			
+			

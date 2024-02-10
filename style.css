@@ -1,0 +1,13 @@
+
+                table,th{
+                    border: 1px solid black;
+                }
+            
+            h2{
+    border-top-style: solid;
+				
+    border-top-width: 2px;
+    width: 1300px;
+    font-style: initial;
+    font-size: 30px;
+}
